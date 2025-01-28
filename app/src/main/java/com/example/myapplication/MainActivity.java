@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up the button to trigger a notification when clicked
         Button notifyButton = findViewById(R.id.notifyButton);
         notifyButton.setOnClickListener(v -> sendNotification());
+
+        // Set up the long notification button
+        Button longNotifyButton = findViewById(R.id.LongnotifyButton);
+        longNotifyButton.setOnClickListener(v -> sendLongNotification());
     }
 
     private void sendNotification() {
@@ -73,6 +77,29 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MainActivity", "Error sending notification", e);  // Error log
         }
     }
+
+    private void sendLongNotification() {
+        try {
+            Log.d("MainActivity", "Long Notification is about to be sent");
+
+            // Build and send the notification with a default system icon
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(android.R.drawable.ic_dialog_info)  // Default system icon
+                    .setContentTitle("Long Button Clicked!")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nisi justo. Quisque augue mi, elementum ut sapien in, vestibulum sodales ipsum. Phasellus diam neque, efficitur sit amet tincidunt id, mollis non mi. Nunc vulputate libero vel magna euismod, vel auctor leo rhoncus. Aliquam ut semper turpis. Pellentesque cursus odio nec magna aliquet, id pellentesque orci suscipit. Duis in est nec sapien euismod egestas. Maecenas volutpat dui eget sem vehicula, a dapibus justo viverra. Sed pulvinar purus quis turpis aliquam maximus. Mauris ac vulputate mi. Maecenas laoreet fringilla sollicitudin. Suspendisse a erat nec ipsum varius congue id sit amet felis. Phasellus interdum massa libero, sed eleifend felis interdum vitae. Etiam volutpat neque hendrerit enim consectetur, eget pharetra massa ornare. Cras malesuada arcu et neque laoreet efficitur. Fusce turpis odio, lacinia et dignissim ac, interdum nec purus.."))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true)  // Dismiss after clicking
+                    .build();
+
+            notificationManager.notify(2, notification);  // Notification ID is 2 for the long notification
+
+        } catch (Exception e) {
+            e.printStackTrace();  // Catch any unexpected exceptions and log them
+            Log.e("MainActivity", "Error sending long notification", e);  // Error log
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
